@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>برکه‌ی قورباغه ولی رودمپ!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playpen+Sans+Arabic:wght@300..600&family=Vazirmatn:wght@300..500&display=swap" rel="stylesheet">
+<style>
+
+:root{ --font-title:"Playpen Sans Arabic","Vazirmatn","Tahoma",sans-serif; --font-body:"Playpen Sans Arabic","Vazirmatn","Tahoma",sans-serif; }
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow:hidden;font-family:var(--font-body);color:#000}
+#pond{position:relative;width:100%;height:100%;overflow:hidden;
+  background:
+   radial-gradient(circle at 18% 12%,rgba(255,255,255,.8),transparent 38%),
+   radial-gradient(circle at 88% 85%,rgba(255,205,235,.55),transparent 42%),
+   radial-gradient(circle at 70% 20%,rgba(215,200,255,.5),transparent 35%),
+   linear-gradient(165deg,#d3faf3 0%,#a6ecf0 45%,#bfe0ff 100%);}
+#pond::before{content:"";position:absolute;inset:0;opacity:.6;pointer-events:none;
+  background:repeating-linear-gradient(105deg,rgba(255,255,255,.18) 0 2px,transparent 2px 34px)}
+svg{display:block}
+#trail{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.decor{position:absolute;width:clamp(60px,13vmin,110px);transform:translate(-50%,-50%);pointer-events:none;animation:sway 5s ease-in-out infinite}
+@keyframes sway{50%{transform:translate(-50%,-50%) rotate(3deg) translateY(-3px)}}
+.sp{position:absolute;width:11px;height:11px;background:#fff;pointer-events:none;animation:tw 2.8s ease-in-out infinite;
+  clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+@keyframes tw{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1.2)}}
+
+.pad{position:absolute;width:clamp(62px,15vmin,100px);aspect-ratio:100/80;transform:translate(-50%,-50%);
+  cursor:pointer;border:0;padding:0;background:none;font:inherit;z-index:2}
+.pad svg{width:100%;height:100%;overflow:visible}
+.pad b{position:absolute;inset:0;display:grid;place-items:center;padding-top:6%;font-weight:400;color:#000;
+  font-size:clamp(16px,3.8vmin,26px);text-shadow:0 0 4px #fff,0 0 4px #fff}
+.pad.next{animation:glow 1.3s ease-in-out infinite}
+.pad.locked{cursor:not-allowed}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 2px #ffb3e1)}50%{filter:drop-shadow(0 0 8px #ff8fd0) drop-shadow(0 0 16px #ffe27a)}}
+
+#frog{position:absolute;width:clamp(48px,10.5vmin,72px);transform:translate(-50%,-64%);z-index:5;pointer-events:none;
+  transition:left .7s cubic-bezier(.4,0,.2,1),top .7s cubic-bezier(.4,0,.2,1)}
+#frog span{display:block}
+#frog.hop span{animation:hop .7s ease-out}
+@keyframes hop{0%{transform:translateY(0) scale(1,1)}25%{transform:translateY(-38px) scale(.9,1.12)}60%{transform:translateY(-32px)}100%{transform:translateY(0) scale(1.1,.9)}}
+
+#hint{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:68px;right:16px;text-align:center;z-index:6;pointer-events:none}
+#hint:not(:empty){display:block}
+#hint span{display:inline-block;background:rgba(255,255,255,.75);border:3px solid #fff;border-radius:20px;padding:4px 16px;
+  font-size:clamp(15px,3.6vmin,21px);box-shadow:0 3px 14px rgba(170,120,220,.3)}
+#mute{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:12px;width:48px;height:48px;border-radius:50%;z-index:30;
+  background:rgba(255,255,255,.8);border:3px solid #fff;box-shadow:0 3px 14px rgba(170,120,220,.35);cursor:pointer;display:grid;place-items:center;padding:0}
+#mute svg{width:26px;height:26px}
+#mute .slash{display:none}
+#mute.muted .slash{display:block}#mute.muted .wave{display:none}
+
+#overlay{position:fixed;inset:0;background:rgba(120,90,180,.35);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:20;padding:18px}
+#overlay.show{display:flex}
+#box{position:relative;width:min(560px,100%);max-height:76vh;margin-top:34px;background:linear-gradient(170deg,#fffafd,#f3ecff);
+  border:5px solid #fff;border-radius:30px;box-shadow:0 0 0 4px #e5ccff,0 14px 40px rgba(150,100,210,.45);padding:26px 20px 18px;display:flex;flex-direction:column;animation:pop .25s ease-out}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
+#fairy{position:absolute;top:-62px;left:50%;transform:translateX(-50%);width:78px;height:88px;border:0;background:none;cursor:pointer;padding:0;
+  animation:float 2.4s ease-in-out infinite;filter:drop-shadow(0 0 8px #fff3a8)}
+#fairy svg{width:100%;height:100%}
+@keyframes float{50%{transform:translateX(-50%) translateY(-7px)}}
+.wing{transform-origin:45px 50px;animation:flap .5s ease-in-out infinite alternate}
+.wing.r{animation-direction:alternate-reverse}
+@keyframes flap{from{transform:scaleX(1)}to{transform:scaleX(.82)}}
+#tabs{display:flex;gap:6px;margin:6px 0 12px;flex-wrap:wrap}
+#tabs button{flex:1;min-width:30%;font:inherit;font-family:var(--font-title);font-size:15px;padding:8px 6px;border:3px solid #dcbcff;border-radius:16px;
+  background:#fff;color:#000;cursor:pointer}
+#tabs button.on{background:#ffc9e3;border-color:#ff9fcb}
+#content{overflow:auto;line-height:2;font-size:17px;min-height:90px;color:#000}
+#content a{color:#000;text-decoration:underline wavy #ff8fbf;text-underline-offset:4px}
+#ok{margin:14px auto 0;font:inherit;font-family:var(--font-title);font-size:18px;padding:8px 30px;border:3px solid #fff;border-radius:18px;
+  background:linear-gradient(#ffe98f,#ffcf5c);color:#000;cursor:pointer;box-shadow:0 4px 0 #e6b43f}
+#ok:active{transform:translateY(3px);box-shadow:0 1px 0 #e6b43f}
+.lang{position:absolute;z-index:1;font-family:var(--font-title);font-size:13px;color:#000;border:2px solid #fff;border-radius:14px;padding:4px 10px;cursor:pointer;
+  transform:translate(-50%,-50%);box-shadow:0 2px 8px rgba(170,120,220,.3);animation:bob 3.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translate(-50%,-50%) translateY(-5px)}}
+.lang.got{animation:gotit .35s forwards}
+@keyframes gotit{to{transform:translate(-50%,-50%) scale(1.8);opacity:0}}
+.lang.win{z-index:3;transform:none;animation:none;opacity:.92}
+.lang.win.got{animation:gotw .35s forwards}
+@keyframes gotw{to{transform:scale(1.8);opacity:0}}
+.p-bl{bottom:8px;left:14px}.p-br{bottom:8px;right:14px}.p-tl{top:-16px;left:18px}.p-sr{right:-14px;top:55%}.p-sl{left:-14px;top:38%}
+#toast{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);z-index:40;background:#fff;border:3px solid #ffc9e3;
+  border-radius:20px;padding:6px 18px;font-size:18px;opacity:0;pointer-events:none;transition:opacity .25s}
+#toast.show{opacity:1}
+#splash{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;
+  background:rgba(0,0,0,.5);opacity:0;transition:opacity .7s ease}
+#splash.show{opacity:1}
+#splash img{width:min(70vmin,420px);height:auto}
+#splashText{color:#fff;font-size:clamp(15px,3.6vmin,22px);text-align:center;text-shadow:0 2px 8px rgba(0,0,0,.6);max-width:520px;line-height:1.9}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="splash">
+  <img src="logo.png" alt="Computer Engineering - Alzahra University">
+  <div id="splashText">
+    ساخته شده توسط دانشجویان انجمن کامپیوتر دانشگاه الزهرا (س)</div>
+    - سال ۴۰۵ -</div>
+  </div>
+</div>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <radialGradient id="gp" cx="40%" cy="35%" r="80%"><stop offset="0" stop-color="#c9f5a8"/><stop offset=".55" stop-color="#7fdc9a"/><stop offset="1" stop-color="#4fbf8c"/></radialGradient>
+</defs></svg>
+
+<div id="pond">
+  <svg id="trail" viewBox="0 0 100 100" preserveAspectRatio="none"><path id="trailPath" fill="none" stroke="#a9754a" stroke-width="5" stroke-linecap="round" stroke-dasharray="0.1 13" vector-effect="non-scaling-stroke"/></svg>
+  <div id="hint"></div>
+  <div id="frog"><span>
+    <svg viewBox="0 0 64 54"><ellipse cx="14" cy="48" rx="11" ry="5" fill="#8be58f" stroke="#3f9b5a" stroke-width="2"/><ellipse cx="50" cy="48" rx="11" ry="5" fill="#8be58f" stroke="#3f9b5a" stroke-width="2"/>
+    <ellipse cx="32" cy="32" rx="24" ry="19" fill="#8be58f" stroke="#3f9b5a" stroke-width="2"/><ellipse cx="32" cy="39" rx="14" ry="9" fill="#e4ffd8"/>
+    <circle cx="20" cy="14" r="9" fill="#8be58f" stroke="#3f9b5a" stroke-width="2"/><circle cx="44" cy="14" r="9" fill="#8be58f" stroke="#3f9b5a" stroke-width="2"/>
+    <circle cx="20" cy="14" r="6" fill="#fff"/><circle cx="44" cy="14" r="6" fill="#fff"/><circle cx="21" cy="15" r="3.6" fill="#000"/><circle cx="45" cy="15" r="3.6" fill="#000"/>
+    <circle cx="22" cy="13.5" r="1.3" fill="#fff"/><circle cx="46" cy="13.5" r="1.3" fill="#fff"/>
+    <circle cx="12" cy="31" r="4" fill="#ffadc8" opacity=".85"/><circle cx="52" cy="31" r="4" fill="#ffadc8" opacity=".85"/>
+    <path d="M25 29 Q32 36 39 29" fill="none" stroke="#2a5a3a" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="32" cy="5" r="3" fill="#fff" stroke="#ff9fcb" stroke-width="1.5"/><circle cx="32" cy="5" r="1.2" fill="#ffd23f"/></svg>
+  </span></div>
+</div>
+
+<button id="mute" aria-label="قطع/وصل موزیک"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M4 9v6h4l5 4V5L8 9H4z" fill="#ffc9e3"/><g class="wave"><path d="M16 9a4 4 0 010 6"/><path d="M18.5 6.5a8 8 0 010 11"/></g><path class="slash" d="M16 9l5 6M21 9l-5 6"/></svg></button>
+
+<div id="overlay"><div id="box">
+  <button id="fairy" aria-label="بستن پنجره"><svg viewBox="0 0 90 100">
+    <g class="wing"><ellipse cx="22" cy="46" rx="19" ry="28" transform="rotate(-22 22 46)" fill="#d8f1ff" fill-opacity=".85" stroke="#a9dcf5" stroke-width="1.5"/><ellipse cx="25" cy="70" rx="10" ry="14" transform="rotate(-10 25 70)" fill="#ffd9f0" fill-opacity=".85" stroke="#ffb3e0" stroke-width="1.2"/></g>
+    <g class="wing r"><ellipse cx="68" cy="46" rx="19" ry="28" transform="rotate(22 68 46)" fill="#d8f1ff" fill-opacity=".85" stroke="#a9dcf5" stroke-width="1.5"/><ellipse cx="65" cy="70" rx="10" ry="14" transform="rotate(10 65 70)" fill="#ffd9f0" fill-opacity=".85" stroke="#ffb3e0" stroke-width="1.2"/></g>
+    <circle cx="45" cy="12" r="9" fill="#ff9ccf"/>
+    <path d="M33 60 Q45 55 57 60 L65 86 Q45 95 25 86Z" fill="#cdb8ff" stroke="#a98cf0" stroke-width="1.5"/>
+    <path d="M28 84 Q33 90 38 85 Q45 92 52 85 Q57 90 62 84" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="45" cy="38" r="19" fill="#ffe3d3"/>
+    <path d="M26 38 Q26 14 45 15 Q64 14 64 38 Q58 26 45 29 Q32 26 26 38Z" fill="#ff9ccf"/>
+    <circle cx="33" cy="21" r="3.6" fill="#fff" stroke="#ffd23f" stroke-width="1.5"/><circle cx="45" cy="16" r="3.6" fill="#fff" stroke="#ffd23f" stroke-width="1.5"/><circle cx="57" cy="21" r="3.6" fill="#fff" stroke="#ffd23f" stroke-width="1.5"/>
+    <ellipse cx="38" cy="41" rx="2.8" ry="3.6" fill="#000"/><ellipse cx="52" cy="41" rx="2.8" ry="3.6" fill="#000"/>
+    <circle cx="39" cy="39.6" r="1.1" fill="#fff"/><circle cx="53" cy="39.6" r="1.1" fill="#fff"/>
+    <circle cx="32" cy="47" r="3.6" fill="#ffadc8" opacity=".8"/><circle cx="58" cy="47" r="3.6" fill="#ffadc8" opacity=".8"/>
+    <path d="M41 48.5 Q45 52 49 48.5" fill="none" stroke="#7a3b3b" stroke-width="1.6" stroke-linecap="round"/>
+    <line x1="62" y1="66" x2="80" y2="44" stroke="#d9a8ff" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="80,34 82.5,41 90,42 84,46.5 86,54 80,49.5 74,54 76,46.5 70,42 77.5,41" fill="#ffe27a" stroke="#ffc83d" stroke-width="1"/>
+  </svg></button>
+  <div id="tabs"></div>
+  <div id="content"></div>
+  <button id="ok">متوجه شدم</button>
+</div></div>
+
+<script>
+
+const WELCOME = { title:"راهنمای بازی", html:`
+  <div style="text-align:center">برای بستن هر پنجره، روی پریِ بالای اون کلیک کن ~</div>
+  <div style="text-align:center">می‌تونی موسیقی پس‌زمینه رو از بالای صفحه بی‌صدا کنی.</div>
+  <div style="text-align:center">برای رفتن به مراحل بعدی، روی برگِ نیلوفر بعدی کلیک کن. (نور رو دنبال کن، نور راهنماییت می‌کنه!)</div>
+  <div style="text-align:center">بعضی از مراحل چند بخش دارن. حواست باشه که همه‌چیز رو چک کنی.</div>
+  <div style="text-align:center">در طول بازی، زبان‌های برنامه‌نویسی رو هم پیدا کن ~</div>
+  <div style="text-align:center">خوش بگذره!</div>
+` };
+
+const PADS = [
+  [ { title:"", html:`
+      <div style="text-align:center">سلام!</div> 
+      <div style="text-align:center">قبولیتون در رشته‌ی مهندسی کامپیوتر دانشگاه الزهرا (س) رو تبریک میگیم!</div>
+      <div style="text-align:center">امیدواریم ۸ ترم خوبی رو اینجا سپری کنید و خاطرات خوبی از دوره‌ی کارشناسیتون براتون بجا بمونه.</div>
+      <div style="text-align:center">بیاید یکذره باهم برای تحصیل در این رشته آماده شیم ~</div>
+  ` } ],
+
+  [ { title:"", html:`
+      برای عضو شدن در گروه مهندسی‌کامپیوتر ورودی خودتون <a href="https://t.me/+2cI4U-qW244wYjM0" target="_blank" rel="noopener">اینجا کلیک کن</a>
+  ` } ],
+
+  [ { title:"", html:`
+      <div style="text-align:center">از اینجا به بعد، قراره ببینید که هر ترم چه درس‌هایی رو میخونید، چه مهارت‌هایی رو بدست میارید و چه کارهایی رو بهتره که انجام بدید.</div>
+  ` } ],
+
+  [ { title:"درس‌های ترم یک", html:`
+    فیزیک: ★★★ <br>
+ریاضیات عمومی: ★★★ <br>
+مبانی کامپیوتر و برنامه‌سازی: ★★★ <br>
+زبان فارسی: ☆☆☆ <br>
+زبان انگلیسی: ☆☆☆ <br>
+تربیت بدنی: ☆ <br>
+کاربینی: ★ <br><br>
+راهنمایی: ستاره‌ها، نشون دهنده‌ی تعداد واحدهای هر درس هستن. ستاره‌های توپُر‌ برای درس‌های پایه و تخصصی، و ستاره‌های توخالی برای نمایش دروس عمومی استفاده شدن.)
+  ` },
+    { title:"مهارت‌هایی که توی این ترم یاد می‌گیرید", html:`
+      این ترم اولین زبان برنامه‌نویسیتون رو یاد می‌گیرید! با دنیای جذاب کد زدن آشنا میشید و یاد می‌گیرید که چطور کُدِ پایتون بزنید. اگر انتظار داشتید که با لپ‌تاپ سر کلاس بیاید، متأسفیم که با کد نوشتن روی کاغذ یکذره سوپرایز شدید—اما ناامید نشید، نوشتن کد روی کاغذ مزایای خودش رو داره که بعداً بهش پی می‌برید. علاوه بر برنامه‌نویسی، از مطالب کارآمد درس کاربینی لذت ببرید و خیلی خوب بهشون گوش بدید.
+  ` },
+    { title:"توصیه‌ی سال بالایی‌ها به شما", html:`
+      ترم‌های اول رو جدی بگیرید. خیلی‌ها میگن چندترم اول نیازی به درس خوندن نیست، اما جلوتر که برید ممکنه به خودتون بیاید و ببینید بزرگتر ضعفتون توی همین مباحث پایه‌ایه که توی ترم‌های اول یاد (ن)گرفتید. توصیه‌ی اصلی ما به شما؟ جزوه بنویسید! خصوصاً برای اون یکدونه درسی که فکر می‌کنید با عکس گرفتن از تخته کارتون راه میفته، خصوصاً برای اون درسی که کُدهاش پای تخته نوشته میشه و شما با خودتون فکر می‌کنید، ‘این یکی که دیگه جزوه نوشتن نداره’. کلیشه‌های ‘جامدادی آوردن به دانشگاه’ رو مستقیم از پنجره بندازید بیرون و هرطوری که باعث یادگیری بهترتون میشه، جزوه بنویسید.
+  ` } ],
+
+  [ { title:"درس‌های ترم دو", html:`
+     فیزیک ۲: ★★★ <br>
+ریاضیات عمومی۲: ★★★ <br>
+برنامه‌نویسی پیشرفته: ★★★ <br>
+ریاضیات گسسته: ★★★ <br>
+معادلات دیفرانسیل: ★★★ <br>
+ورزش ۱: ☆ <br>
+اندیشه اسلامی ۱: ☆☆
+  ` },
+    { title:"مهارت‌هایی که توی این ترم یاد می‌گیرید", html:`
+      با یه زبانِ دیگه آشنا میشید و یکم عمیق‌تر درباره‌ی برنامه‌نویسی، زبان‌های مختلف و اصول کد زدن یاد می‌گیرید. این ترم جاییه که می‌تونید تا حدودی به سمت و سوی علاقه‌اتون پی ببرید. بجز این، قسمت‌های ریاضی و محاسباتی زیادی یاد می‌گیرید که ممکنه تاحدودی اشکتون رو در بیارن، ولی حتماً باید یادشون بگیرید!
+  ` },
+    { title:"توصیه‌ی سال بالایی‌ها به شما", html:`
+      پا به پای استاد پیش بیاید، دووم میارید. این ترم روش‌های محاسباتی‌ای داره که باید خوب یادشون بگیرید، تنها مشکل اینه که حجمشون کمی بالاست. سعی کنید از همون جلسات اول با اساتیدتون همراه بشید و زیاد تمرین حل کنید.
+  ` } ],
+
+  [ { title:"درس‌های ترم سه", html:`
+      جبر خطی: ★★★ <br>
+ساختمان داده‌ها: ★★★ <br>
+مداراهی الکتریکی و الکترونیکی: ★★★ <br>
+آزمایشگاه مدارهای الکتریکی و الکترونیکی: ★ <br>
+مدارهای منطقی: ★★★ <br>
+زبان تخصصی: ★★ <br>
+اندیشه اسلامی ۲: ☆☆ <br>
+دانش خانواده و جمعیت: ☆☆
+  ` },
+    { title:"مهارت‌هایی که توی این ترم یاد می‌گیرید", html:`
+      اینجا یکم عمیق‌تر میشیم! هم درباره‌ی نرم‌افزارها و طوری که کدها کار می‌کنن، اینکه چطور میتونیم بهینه‌اشون کنیم، و هم درباره‌ی سخت‌افزار و این که یک مدار چطور بسته میشه و اصلاً سخت‌افزار چطور فرمان‌های ما رو متوجه میشه.
+  ` },
+    { title:"توصیه‌ی سال بالایی‌ها به شما", html:`
+    در درجه‌ی اول، اون یکدونه درس رو پاس شید. در درجه‌ی دوم، درس‌های این ترم رو خیلی خوب بخونید. ترم ۴ مستقیماً ادامه‌ای از ترم ۳ هست، هرچقدر که ترم ۳ بهتر مطالب رو یاد بگیرید، ترم ۴ ساده‌تر خواهد گذشت. به‌علاوه، این ترم مطالبی رو یاد می‌گیرید که شاید مستقیماً به‌کار نیان، اما در آینده و به خصوص در بازار کار، شما از نتیجه‌ی اون استفاده خواهید کرد و فرض میشه که شما روی این مطالب پایه تسلط دارید.
+  ` } ],
+
+  [ { title:"درس‌های ترم چهار", html:`
+    معماری کامپیوتر: ★★★ <br>
+سیگنال‌ها و سیستم‌ها: ★★★ <br>
+پایگاه داده‌ها: ★★★ <br>
+طراحی الگوریتم‌ها: ★★★ <br>
+آمار و احتمالات مهندسی: ★★★ <br>
+آزمایشگاه مدارهای منطقی و معماری: ★ <br>
+انقلاب اسلامی ایران: ☆☆
+  ` },
+    { title:"مهارت‌هایی که توی این ترم یاد می‌گیرید", html:`
+    اینجا وارد سخت‌افزار میشیم! کمی عمیق‌تر درباره‌ی کامپیوتر یاد میگیریم و مهارت‌هایی رو بدست میارید که شاید هر برنامه‌نویسی اونها رو بلد نیست.
+  ` },
+    { title:"توصیه‌ی سال بالایی‌ها به شما", html:`
+    سعی کنید مطالعات خارج از دانشگاهتون رو بیشتر کنید. درس‌های این ترمتون رو جدی بگیرید—نه فقط چون درس‌های ساده‌ای نیستن، بلکه به این خاطر که کارآمد هستن و از اهمیت بالایی برخوردارن. سعی کنید خوب یادشون بگیرید!
+  ` } ],
+
+  [ { title:"درس‌های ترم پنج", html:`
+      نظریه زبان‌ها و ماشین‌ها: ★★★ <br>
+تحلیل و طراحی سیستم‌ها: ★★★ <br>
+اصول طراحی کامپایلرها: ★★★ <br>
+سیستم‌های عامل: ★★★ <br>
+آزمایشگاه سیستم‌های عامل: ★ <br>
+ریزپردازنده‌ها و مدارهای واسط: ★★★ <br>
+آزمایشگاه ریزپردازنده: ★ <br>
+تاریخ تحیلی صدر اسلام: ☆☆
+  ` },
+    { title:"oops!", html:`
+      از اینجا به بعدِ مسیر، وقتش میرسه که خودتون، راهتون رو پیدا کنید. اگه تا اینجای کار پیش اومدید، مطمئنیم که می‌تونید از پس ادامه‌ی مسیرتون بر بیاید!
+  ` } ],
+
+  [ { title:"درس‌های ترم شش", html:`
+      هوش مصنوعی و سیستم های  خبره: ★★★ <br>
+شبکه های کامپیوتری: ★★★ <br>
+مهندسی نرم افزار: ★★★ <br>
+زبان های برنامه نویسی: ★★★ <br>
+مبانی یادگیری ماشین: ★★★ <br>
+آزمایشگاه شبکه های کامپیوتری: ★ <br>
+آزمایشگاه تولید محتوای تخصصی: ★ <br>
+آزمایشگاه پایگاه داده: ★
+  ` } ],
+
+  [ { title:"درس‌های ترم هفت", html:`
+     آزمون نرم افزار: ★★★ <br>
+مباحث ویژه ۱: ★★★ <br>
+درس اختیاری: ★★★ <br>
+سیستم‌های چند رسانه‌ای: ★★★ <br>
+اخلاق اسلامی: ☆☆ <br>
+تفسیر موضوعی قرآن: ☆☆ <br>
+کارآموزی: ★★
+  ` } ],
+
+  [ { title:"درس‌های ترم هشت", html:`
+      مباحث ویژه ۲: ★★★ <br>
+درس اختیاری: ★★★ <br>
+مبانی داده کاوی: ★★★ <br>
+مهارت های نرم شغلی: ★★ <br>
+پروژه کارشناسی: ★★
+  ` } ]
+];
+
+const FINAL = { html: `
+      <div style="text-align:center">خسته نباشید!</div>
+      <div style="text-align:center">این خلاصه‌ای بود از مسیری که پیش روی شماست. هنوز خیلی چیزها هست که باید بدونید، پس مابقی مطالب رو موکول می‌کنیم به زمانی که بتونیم رو در رو باهمدیگه صحبت کنیم!</div>
+      <div style="text-align:center">موفق باشید~</div>
+` };
+
+
+
+
+const MUSIC_URL = "urdoingfine.mp3";
+
+const POS = [
+  [14,88],[40,82],[70,88],[84,70],[58,64],[28,66],
+  [16,46],[44,42],[74,46],[80,24],[48,18]
+];
+const DECOR = [[6,68],[92,50],[30,93],[62,30],[22,22],[92,8],[8,10],[36,56]];
+
+const pond=document.getElementById('pond'), frog=document.getElementById('frog'), hint=document.getElementById('hint');
+const overlay=document.getElementById('overlay'), fairy=document.getElementById('fairy'), tabsEl=document.getElementById('tabs');
+const contentEl=document.getElementById('content'), okBtn=document.getElementById('ok');
+
+let current=0, free=false, busy=true, onClose=null;
+const padEls=[];
+
+(function(){
+  let d='M'+POS[0].join(' ');
+  for(let i=1;i<POS.length-1;i++){
+    const mx=(POS[i][0]+POS[i+1][0])/2, my=(POS[i][1]+POS[i+1][1])/2;
+    d+=' Q'+POS[i].join(' ')+' '+mx+' '+my;
+  }
+  d+=' L'+POS[POS.length-1].join(' ');
+  document.getElementById('trailPath').setAttribute('d',d);
+})();
+
+
+function lotus(){
+  let p='<ellipse cx="50" cy="70" rx="42" ry="9" fill="url(#gp)" stroke="#2f9a63" stroke-width="2"/>';
+  [-64,-34,34,64].forEach(a=>p+='<ellipse cx="50" cy="46" rx="11" ry="27" transform="rotate('+a+' 50 70)" fill="#ffc9e3" stroke="#ff9fcb" stroke-width="1.5"/>');
+  [-16,16].forEach(a=>p+='<ellipse cx="50" cy="44" rx="11" ry="28" transform="rotate('+a+' 50 70)" fill="#ffdcec" stroke="#ff9fcb" stroke-width="1.5"/>');
+  p+='<ellipse cx="50" cy="42" rx="11" ry="29" fill="#fff0f7" stroke="#ff9fcb" stroke-width="1.5"/><circle cx="50" cy="58" r="4" fill="#ffd23f"/>';
+  return '<svg viewBox="0 0 100 80">'+p+'</svg>';
+}
+DECOR.forEach((p,i)=>{
+  const el=document.createElement('div'); el.className='decor';
+  el.style.left=p[0]+'%'; el.style.top=p[1]+'%'; el.style.animationDelay=(i*.6)+'s';
+  el.innerHTML=lotus(); pond.appendChild(el);
+});
+for(let i=0;i<18;i++){
+  const s=document.createElement('i'); s.className='sp';
+  s.style.left=(Math.random()*96)+'%'; s.style.top=(Math.random()*96)+'%'; s.style.animationDelay=(Math.random()*3)+'s';
+  pond.appendChild(s);
+}
+
+
+const PADSVG='<svg viewBox="0 0 100 80"><ellipse cx="52" cy="50" rx="46" ry="30" fill="#6fbfd6" opacity=".35"/>'+
+ '<path d="M50 42 L95.5 37.3 A46 34 0 1 1 89.8 25 Z" fill="url(#gp)" stroke="#2f9a63" stroke-width="2.5" stroke-linejoin="round"/>'+
+ '<g stroke="#d4f7bd" stroke-width="1.8" stroke-linecap="round"><path d="M50 42L86.8 51.9M50 42L69.6 67M50 42L43.2 70.5M50 42L20.1 60.6M50 42L10.9 42M50 42L20.1 23.4M50 42L43.2 13.5M50 42L69.6 17"/></g>'+
+ '<ellipse cx="38" cy="29" rx="16" ry="7" fill="#fff" opacity=".35" transform="rotate(-15 38 29)"/></svg>';
+POS.forEach((p,i)=>{
+  const b=document.createElement('button'); b.className='pad';
+  b.style.left=p[0]+'%'; b.style.top=p[1]+'%'; b.setAttribute('aria-label','برگ نیلوفر '+(i+1));
+  b.innerHTML=PADSVG+'<b>'+(i+1)+'</b>';
+  b.addEventListener('click',()=>tryHop(i+1));
+  pond.appendChild(b); padEls.push(b);
+});
+pond.appendChild(frog); pond.appendChild(hint);
+
+function place(x,y){frog.style.left=x+'%';frog.style.top=y+'%';}
+place(4,96);
+
+function refresh(){
+  padEls.forEach((el,i)=>{
+    const n=i+1;
+    el.classList.toggle('next',!busy&&!free&&n===current+1);
+    el.classList.toggle('locked',!free&&n!==current+1);
+  });
+  const t=busy?'':free?'حالا آزادی! هر برگی رو که دوست داری انتخاب کن 🐸':current===0?'روی برگ شمارهٔ ۱ بزن تا قورباغه بپره':'برگ بعدی رو انتخاب کن';
+  hint.innerHTML=t?'<span>'+t+'</span>':'';
+  pondLangs.forEach(e=>{e.style.display=(!found.has(e.textContent)&&current>=+e.dataset.u)?'':'none';});
+}
+
+function showModal(tabs,withFairy,cb,padNo){
+  onClose=cb; let idx=0;
+  fairy.style.display=withFairy?'':'none';
+  okBtn.style.display=withFairy?'none':'';
+  function draw(){
+    tabsEl.innerHTML='';
+    const vis=tabs.length>1||(tabs[0]&&tabs[0].title);
+    tabsEl.style.display=vis?'flex':'none';
+    if(vis) tabs.forEach((t,i)=>{
+      const bt=document.createElement('button'); bt.textContent=t.title; bt.className=i===idx?'on':'';
+      bt.onclick=()=>{idx=i;draw();}; tabsEl.appendChild(bt);
+    });
+    contentEl.innerHTML=tabs[idx].html;
+  }
+  draw(); overlay.classList.add('show'); busy=true; refresh(); placeStickers(padNo);
+}
+function closeModal(){
+  overlay.classList.remove('show');
+  const cb=onClose; onClose=null;
+  if(cb) cb(); else {busy=false;refresh();}
+}
+fairy.addEventListener('click',closeModal);
+okBtn.addEventListener('click',closeModal);
+
+function tryHop(n){
+  if(busy) return;
+  if(!free&&n!==current+1) return;
+  busy=true; refresh();
+  const q=POS[n-1];
+  frog.classList.remove('hop'); void frog.offsetWidth; frog.classList.add('hop');
+  place(q[0],q[1]);
+  setTimeout(()=>{
+    frog.classList.remove('hop');
+    if(!free) current=n;
+    showModal(PADS[n-1],true,()=>{
+      if(!free&&n===PADS.length){
+        showModal([{title:'',html:FINAL.html+countHtml()}],true,()=>{free=true;busy=false;refresh();});
+      } else {busy=false;refresh();}
+    },n);
+  },750);
+}
+
+
+const muteBtn=document.getElementById('mute');
+if(!MUSIC_URL){ muteBtn.style.display='none'; }
+else{
+  const audio=new Audio(MUSIC_URL); audio.loop=true; audio.volume=.5;
+  let started=false;
+  const start=()=>{ if(started) return; audio.play().then(()=>{started=true;document.removeEventListener('pointerdown',start);}).catch(()=>{}); };
+  document.addEventListener('pointerdown',start);
+  muteBtn.addEventListener('click',()=>{ audio.muted=!audio.muted; muteBtn.classList.toggle('muted',audio.muted); });
+}
+
+
+const L_TOTAL=17;
+const HP=[["Rust",4,30],["Go",96,68],["R",54,95],["SQL",66,8],["C",34,30],["PHP",88,36],["Ruby",60,42],["Swift",3,52],["Kotlin",74,58],["HTML",50,54],["MATLAB",20,34]];
+const HW={2:["Python","bl"],4:["Java","sr"],6:["C++","tl"],8:["JavaScript","br"],9:["C#","sl"],11:["TypeScript","bl"]};
+const found=new Set();
+const toastEl=document.createElement('div'); toastEl.id='toast'; document.body.appendChild(toastEl);
+let toastT;
+function say(n){ toastEl.innerHTML='✨ <bdi dir="ltr">'+n+'</bdi> پیدا شد!'; toastEl.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>toastEl.classList.remove('show'),1500); }
+function mk(name,cls){
+  const e=document.createElement('button'); e.className='lang '+cls; e.dir='ltr'; e.textContent=name;
+  e.style.background='hsl('+((name.length*47+name.charCodeAt(0)*13)%360)+' 85% 86% / .8)';
+  e.onclick=ev=>{ ev.stopPropagation(); if(found.has(name)) return; found.add(name); e.classList.add('got'); say(name); setTimeout(()=>e.remove(),350); };
+  return e;
+}
+const pondLangs=HP.map((h,i)=>{ const e=mk(h[0],'pl'); e.style.left=h[1]+'%'; e.style.top=h[2]+'%'; e.dataset.u=i; e.style.animationDelay=(i*.4)+'s'; pond.appendChild(e); return e; });
+function placeStickers(n){
+  const bx=document.getElementById('box');
+  bx.querySelectorAll('.lang').forEach(x=>x.remove());
+  const w=HW[n];
+  if(w&&!found.has(w[0])) bx.appendChild(mk(w[0],'win p-'+w[1]));
+}
+function countHtml(){
+  const k=found.size;
+  const t=k>=L_TOTAL?'🎉 هر ۱۷ زبان برنامه‌نویسیِ پنهان رو پیدا کردی!':'🔍 تعداد زبان‌های برنامه‌نویسیِ پنهانی که پیدا کردی: '+k.toLocaleString('fa')+' از '+L_TOTAL.toLocaleString('fa');
+  return '<div style="text-align:center;margin-top:16px;font-size:18px">'+t+'</div>';
+}
+
+
+showModal([WELCOME],false,()=>{busy=false;refresh();});
+const splash=document.getElementById('splash');
+requestAnimationFrame(()=>splash.classList.add('show'));
+const hideSplash=()=>{ splash.classList.remove('show'); setTimeout(()=>splash.remove(),800); };
+setTimeout(hideSplash,3700);   
+splash.addEventListener('click',hideSplash);
+</script>
+</body>
+</html>
